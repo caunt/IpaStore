@@ -63,14 +63,14 @@ Every commit message must follow **Conventional Commits** (https://www.conventio
 ### Format
 
 ```
-<emoji> <type>(<scope>): <short description>
+<type>(<scope>): <emoji> <short description>
 
 [optional body]
 
 [optional footer(s)]
 ```
 
-- **emoji** — one gitmoji (see table below), placed before the type token.
+- **emoji** — one gitmoji (see table below), placed after the `type(scope):` prefix.
 - **type** — lowercase conventional-commit type.
 - **scope** — optional, lowercase, names the project or area changed (e.g. `playground`, `core`, `ci`).
 - **short description** — imperative mood, lowercase, no trailing period, ≤ 72 chars total (including emoji and type).
@@ -80,7 +80,7 @@ Every commit message must follow **Conventional Commits** (https://www.conventio
 ### Examples
 
 ```
-✨ feat(core): add package version resolver
+feat(core): ✨ add package version resolver
 
 Resolves version conflicts by preferring the highest compatible semver
 range rather than the first declaration.
@@ -89,7 +89,7 @@ Closes #42
 ```
 
 ```
-🐛 fix(api): return 404 when package is not found
+fix(api): 🐛 return 404 when package is not found
 
 Previously the endpoint returned 500 because the repository threw
 InvalidOperationException instead of returning null.
@@ -98,11 +98,11 @@ Fixes #17
 ```
 
 ```
-♻️ refactor(playground): replace List<T> initializers with collection expressions
+refactor(playground): ♻️ replace List<T> initializers with collection expressions
 ```
 
 ```
-✅ test(core): add unit tests for version resolver edge cases
+test(core): ✅ add unit tests for version resolver edge cases
 ```
 
 ---
@@ -157,7 +157,7 @@ Examples: `feat/version-resolver`, `fix/404-on-missing-package`, `docs/contribut
 
 ## 5. Pull Request Rules
 
-- Title must follow the same `<emoji> <type>(<scope>): <description>` format as a commit.
+- Title must follow the same `<type>(<scope>): <emoji> <description>` format as a commit.
 - Every PR must reference the issue it resolves (`Closes #<n>`) unless it is a chore with no associated issue.
 - Squash-merge is preferred; keep the squash commit message in conventional-commit format.
 - All CI checks must be green before merging.
