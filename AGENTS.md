@@ -11,6 +11,7 @@ These rules are **strict**. All contributions — whether from humans or AI agen
 - Target **net10.0** exclusively. Do not add any downgrade target-framework entries.
 - Enable `<Nullable>enable</Nullable>` and `<ImplicitUsings>enable</ImplicitUsings>` in every `.csproj`.
 - Never suppress nullable warnings with `!` (null-forgiving operator) unless the surrounding code makes nullability provably impossible and a brief comment explains why.
+- Set `<TreatWarningsAsErrors>true</TreatWarningsAsErrors>` in every `.csproj`. The build **must produce zero warnings** — do not commit code that causes any compiler warning or analyzer diagnostic.
 
 ### Code Style
 
@@ -29,6 +30,17 @@ These rules are **strict**. All contributions — whether from humans or AI agen
 - Keep methods **short and focused** — a single screen of code is a guideline, not a hard limit, but prefer splitting when a method has multiple distinct responsibilities.
 - No **magic numbers** or **magic strings** — use named constants or enums.
 - XML doc comments (`/// <summary>`) are required on all `public` and `protected` members.
+- Use **expression-bodied members** (`=>`) for single-expression properties, methods, and operators; use block bodies when the logic spans more than one statement.
+- Use **`using` declarations** (`using var stream = …`) instead of `using` blocks when the scope naturally ends at the enclosing block boundary.
+- Implement **`IDisposable`** / **`IAsyncDisposable`** on any type that owns unmanaged resources or long-lived managed resources; prefer `IAsyncDisposable` when teardown involves async I/O.
+- Always **seal** concrete classes that are not designed for inheritance; mark leaf nodes of an inheritance hierarchy `sealed` to enable devirtualisation.
+- Use **`StringComparison.Ordinal`** (or `OrdinalIgnoreCase`) for all non-linguistic string comparisons; never rely on the default culture-sensitive overloads.
+- Prefer **string interpolation** over `string.Format`; prefer `string.Concat` / `StringBuilder` over repeated `+` concatenation in loops.
+- Use **`Span<T>`** / **`ReadOnlySpan<T>`** and **`Memory<T>`** / **`ReadOnlyMemory<T>`** for slice operations and hot-path string processing to avoid heap allocations.
+- Propagate **`CancellationToken`** through every async call chain; accept a `CancellationToken` parameter (defaulting to `default`) on every `public` async method.
+- Prefer **`readonly`** fields and **`readonly struct`** / **`readonly record struct`** for value types that are logically immutable.
+- Annotate flag enumerations with **`[Flags]`** and use powers-of-two values; prefer `HasFlag` for readable checks.
+- Use **`#pragma warning disable`** only as a last resort and only for a single-line scope; always accompany it with a comment explaining why the suppression is justified.
 
 ### Formatting
 
